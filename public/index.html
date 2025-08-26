@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Management App</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <script src="scripts/main.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">Car Management</div>
+            <ul class="nav-links">
+                <li><a href="#" id="nav-home">Home</a></li>
+                <li><a href="#" id="nav-cars">Cars</a></li>
+                <li><a href="#" id="nav-add-car">Add Car</a></li>
+                <li><a href="#" id="nav-reports">Reports</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="notification-area"></section>
+        <!-- Home Section -->
+        <section id="home-section" class="page-section">
+            <h1>Welcome to the Car Management App</h1>
+            <p>Manage your fleet, track maintenance, and generate reports.</p>
+        </section>
+        <!-- Car List Section -->
+        <section id="cars-section" class="page-section" style="display:none;">
+            <h2>Car List</h2>
+            <input type="text" id="search-car" placeholder="Search by make, model, or VIN..." />
+            <table id="car-table">
+                <thead>
+                    <tr>
+                        <th>Make</th>
+                        <th>Model</th>
+                        <th>Year</th>
+                        <th>VIN</th>
+                        <th>Maintenance</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="car-list">
+                    <!-- Cars will be dynamically inserted here -->
+                </tbody>
+            </table>
+        </section>
+        <!-- Add Car Section -->
+        <section id="add-car-section" class="page-section" style="display:none;">
+            <h2>Add New Car</h2>
+            <form id="add-car-form">
+                <label>Make: <input type="text" name="make" required></label><br>
+                <label>Model: <input type="text" name="model" required></label><br>
+                <label>Year: <input type="number" name="year" min="1900" max="2100" required></label><br>
+                <label>VIN: <input type="text" name="vin" required></label><br>
+                <button type="submit">Add Car</button>
+            </form>
+        </section>
+        <!-- Reports Section -->
+        <section id="reports-section" class="page-section" style="display:none;">
+            <h2>Reports</h2>
+            <div id="reports-content">
+                <button id="generate-report">Generate Maintenance Report</button>
+                <div id="report-output"></div>
+            </div>
+        </section>
+    </main>
+    <!-- Edit Car Modal -->
+    <div id="edit-car-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-edit-car">&times;</span>
+            <h3>Edit Car</h3>
+            <form id="edit-car-form">
+                <input type="hidden" name="carId" />
+                <label>Make: <input type="text" name="make" required></label><br>
+                <label>Model: <input type="text" name="model" required></label><br>
+                <label>Year: <input type="number" name="year" min="1900" max="2100" required></label><br>
+                <label>VIN: <input type="text" name="vin" required></label><br>
+                <button type="submit">Save Changes</button>
+            </form>
+        </div>
+    </div>
+    <!-- Maintenance Modal -->
+    <div id="maintenance-modal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <span class="close-button" id="close-maintenance">&times;</span>
+            <h3>Add Maintenance Record</h3>
+            <form id="add-maintenance-form">
+                <input type="hidden" name="carId" />
+                <label>Date: <input type="date" name="date" required></label><br>
+                <label>Description: <input type="text" name="description" required></label><br>
+                <label>Cost: <input type="number" name="cost" min="0" step="0.01" required></label><br>
+                <button type="submit">Add Record</button>
+            </form>
+            <h4>Maintenance History</h4>
+            <ul id="maintenance-history">
+                <!-- Maintenance records will be dynamically inserted here -->
+            </ul>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; 2025 Car Management App</p>
+    </footer>
+</body>
+</html>
