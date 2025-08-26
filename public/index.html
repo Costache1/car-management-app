@@ -50,6 +50,39 @@
             </table>
         </section>
         <!-- Add Car Section -->
+
+        <section id="add-car-section" class="page-section" style="display:none;">
+    <h2>Add New Car</h2>
+    <form id="add-car-form">
+        <label>
+            Make:
+            <select name="make" id="car-make" required>
+                <option value="">Select Make</option>
+                <option value="Toyota">Toyota</option>
+                <option value="Ford">Ford</option>
+                <option value="BMW">BMW</option>
+                <option value="Volkswagen">Volkswagen</option>
+                <option value="Honda">Honda</option>
+            </select>
+        </label><br>
+        <label>
+            Model:
+            <select name="model" id="car-model" required>
+                <option value="">Select Model</option>
+            </select>
+        </label><br>
+        <label>
+            Year:
+            <select name="year" id="car-year" required>
+                <option value="">Select Year</option>
+            </select>
+        </label><br>
+        <label>VIN: <input type="text" name="vin"></label><br>
+        <button type="submit">Add Car</button>
+    </form>
+</section>
+
+        <!--
         <section id="add-car-section" class="page-section" style="display:none;">
             <h2>Add New Car</h2>
             <form id="add-car-form">
@@ -59,7 +92,7 @@
                 <label>VIN: <input type="text" name="vin" optional></label><br>
                 <button type="submit">Add Car</button>
             </form>
-        </section>
+        </section>-->
         <!-- Reports Section -->
         <section id="reports-section" class="page-section" style="display:none;">
             <h2>Reports</h2>

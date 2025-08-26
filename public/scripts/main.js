@@ -72,7 +72,59 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('search-car').oninput = renderCarList;
 
     // Add Car
-    document.getElementById('add-car-form').onsubmit = e => {
+// Car make/model/year dropdown logic
+const makeModelMap = {
+    Toyota: ["Corolla", "Camry", "Prius", "RAV4"],
+    Ford: ["Fiesta", "Focus", "Mustang", "Explorer"],
+    BMW: ["3 Series", "5 Series", "X3", "X5"],
+    Volkswagen: ["Golf", "Passat", "Tiguan", "Polo"],
+    Honda: ["Civic", "Accord", "CR-V", "Jazz"]
+};
+
+const makeSelect = document.getElementById('car-make');
+const modelSelect = document.getElementById('car-model');
+const yearSelect = document.getElementById('car-year');
+
+// Populate years (e.g., 2000-2025)
+(function populateYears() {
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear; y >= 2000; y--) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+    }
+})();
+
+makeSelect.addEventListener('change', function() {
+    const models = makeModelMap[this.value] || [];
+    modelSelect.innerHTML = '<option value="">Select Model</option>';
+    models.forEach(model => {
+        const opt = document.createElement('option');
+        opt.value = model;
+        opt.textContent = model;
+        modelSelect.appendChild(opt);
+    });
+});
+
+document.getElementById('add-car-form').onsubmit = e => {
+    e.preventDefault();
+    const form = e.target;
+    const car = {
+        id: Date.now().toString(),
+        make: form.make.value,
+        model: form.model.value,
+        year: form.year.value,
+        vin: form.vin.value
+    };
+    cars.push(car);
+    saveData();
+    form.reset();
+    notify('Car added!');
+    showSection('cars');
+    renderCarList();
+};
+    /*document.getElementById('add-car-form').onsubmit = e => {
         e.preventDefault();
         const form = e.target;
         const car = {
@@ -89,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showSection('cars');
         renderCarList();
     };
+*/
 
     // Edit Car
     function openEditCarModal(id) {
