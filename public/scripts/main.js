@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     document.getElementById('search-car').oninput = renderCarList;
-
+/*
     // Add Car
     // Car make/model/year dropdown logic
     const makeModelMap = {
@@ -80,21 +80,57 @@ document.addEventListener('DOMContentLoaded', () => {
         Volkswagen: ["Golf", "Passat", "Tiguan", "Polo"],
         Honda: ["Civic", "Accord", "CR-V", "Jazz"]
     };
-
+*/
     const makeSelect = document.getElementById('car-make');
     const modelSelect = document.getElementById('car-model');
     const yearSelect = document.getElementById('car-year');
 
-    // Populate years (e.g., 2000-2025)
-    (function populateYears() {
-        const currentYear = new Date().getFullYear();
-        for (let y = currentYear; y >= 2000; y--) {
-            const opt = document.createElement('option');
-            opt.value = y;
-            opt.textContent = y;
-            yearSelect.appendChild(opt);
-        }
-    })();
+   // Fetch car makes from NHTSA API
+async function populateMakes() {
+    makeSelect.innerHTML = '<option value="">Loading...</option>';
+    const res = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json');
+    const data = await res.json();
+    makeSelect.innerHTML = '<option value="">Select Make</option>';
+    data.Results.forEach(make => {
+        const opt = document.createElement('option');
+        opt.value = make.Make_Name;
+        opt.textContent = make.Make_Name;
+        makeSelect.appendChild(opt);
+    });
+}
+
+// Fetch models for selected make
+makeSelect.addEventListener('change', async function() {
+    const make = this.value;
+    modelSelect.innerHTML = '<option value="">Loading...</option>';
+    if (!make) {
+        modelSelect.innerHTML = '<option value="">Select Make First</option>';
+        return;
+    }
+    const res = await fetch(`https://vpic.nhtsa.dot.gov/api/vehicles/getmodelsformake/${make}?format=json`);
+    const data = await res.json();
+    modelSelect.innerHTML = '<option value="">Select Model</option>';
+    data.Results.forEach(model => {
+        const opt = document.createElement('option');
+        opt.value = model.Model_Name;
+        opt.textContent = model.Model_Name;
+        modelSelect.appendChild(opt);
+    });
+});
+
+// Populate years (e.g., 2000-Current)
+(function populateYears() {
+    const currentYear = new Date().getFullYear();
+    for (let y = currentYear; y >= 1980; y--) {
+        const opt = document.createElement('option');
+        opt.value = y;
+        opt.textContent = y;
+        yearSelect.appendChild(opt);
+    }
+})();
+
+// Call this on page load
+populateMakes();
 
     makeSelect.addEventListener('change', function () {
         const models = makeModelMap[this.value] || [];
